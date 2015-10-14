@@ -44,33 +44,51 @@ public class Controller implements CS355Controller {
 		view = v;
 		viewOrigX = 0;
 		viewOrigY = 0;
-		zoomFactor = MAX_ZOOM_OUT;
+		zoomFactor = 1;
 		
 		ViewSpaceTransform.createViewSpaceTransform();
 	}
 	
+	public void init() {
+		int knob = (int)(VIEW_SIZE/(zoomFactor*4));
+		int pos = VIEW_SIZE/2 - knob/2;
+		viewOrigX = pos;
+		viewOrigY = pos;
+		GUIFunctions.setHScrollBarKnob(knob);
+		GUIFunctions.setVScrollBarKnob(knob);
+		GUIFunctions.setHScrollBarPosit(pos);
+		GUIFunctions.setVScrollBarPosit(pos);
+		ViewSpaceTransform.inst().setScale(zoomFactor);
+		ViewSpaceTransform.inst().setOrigin(viewOrigX, viewOrigY);
+	}
+	
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		if (state != null)
-			state.mousePressed(PointOps.toDouble(arg0.getPoint()));
+		if (state != null) {
+			Point2D.Double p = ViewSpaceTransform.inst().fromViewToWorld(PointOps.toDouble(arg0.getPoint()));
+			state.mousePressed(p);
+		}
 		else
 			test();
 	}
 	
 	private void test() {
-		model.addShape(new Square(selectedColor, new Point2D.Double(255, 255),100));
+		model.addShape(new Square(selectedColor, new Point2D.Double(1024, 1024),100));
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
-		if (state != null)
-			state.mouseDragged(PointOps.toDouble(arg0.getPoint()));
+		if (state != null) {
+			Point2D.Double p = ViewSpaceTransform.inst().fromViewToWorld(PointOps.toDouble(arg0.getPoint()));
+			state.mouseDragged(p);
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		if (state != null)
+		if (state != null) {
 			state.mouseReleased();
+		}
 	}
 	
 	

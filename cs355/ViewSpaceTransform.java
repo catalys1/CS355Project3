@@ -1,6 +1,7 @@
 package cs355;
 
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 
 
 public class ViewSpaceTransform {
@@ -26,7 +27,7 @@ public class ViewSpaceTransform {
 	private ViewSpaceTransform() {
 		viewOrigX = 0;
 		viewOrigY = 0;
-		scale = 0.25*4;
+		scale = 1;
 	}
 	
 	public void setOrigin(int x, int y) {
@@ -35,20 +36,43 @@ public class ViewSpaceTransform {
 	}
 	
 	public void setScale(double s) {
-		scale = s*4;
+		scale = s;
+	}
+	
+	public int getX() {
+		return viewOrigX;
+	}
+	
+	public int getY() {
+		return viewOrigY;
+	}
+	
+	public double getScale() {
+		return scale;
 	}
 	
 	public AffineTransform transformToViewSpace(AffineTransform objToWorld) {
-//		AffineTransform trans = new AffineTransform(1,0,0,1,-(int)viewOrigX,-(int)viewOrigY);
-//		AffineTransform worldToView = new AffineTransform(scale*4,0,0,scale*4,0,0);
-//		worldToView.concatenate(trans);
-		
-//		AffineTransform worldToView = new AffineTransform(scale,0,0,scale,-scale*viewOrigX,-scale*viewOrigY);
-		AffineTransform worldToView = new AffineTransform();
-		worldToView.scale(scale, scale);
-		worldToView.translate(-viewOrigX, -viewOrigY);
+		AffineTransform worldToView = new AffineTransform(scale,0,0,scale,-scale*viewOrigX,-scale*viewOrigY);
 		worldToView.concatenate(objToWorld);
 		return worldToView;
+		
+//		OLD CODE		
+//		AffineTransform worldToView = new AffineTransform();
+//		worldToView.scale(scale, scale);
+//		worldToView.translate(-viewOrigX, -viewOrigY);
+	}
+	
+	public Point2D.Double fromViewToWorld(Point2D.Double viewPt) {
+		double s = 1/scale;
+		AffineTransform viewToWorld = new AffineTransform(s,0,0,s,viewOrigX,viewOrigY);
+		Point2D.Double worldPt = new Point2D.Double();
+		viewToWorld.transform(viewPt, worldPt);
+		return worldPt;
+		
+//		OLD CODE		
+//		AffineTransform viewToWorld = new AffineTransform();
+//		viewToWorld.translate(viewOrigX, viewOrigY);
+//		viewToWorld.scale(s, s);
 	}
 
 }

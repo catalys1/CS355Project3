@@ -25,7 +25,7 @@ public class CS355 {
 		Controller controller = new Controller(model, view);
 		
 		GUIFunctions.createCS355Frame(controller, view);
-
+		controller.init();
 		GUIFunctions.refresh();
 	}
 }

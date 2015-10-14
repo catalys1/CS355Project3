@@ -28,18 +28,15 @@ public class DrawableShape {
 		double cos = Math.cos(t);
 		double sin = Math.sin(t);
 		
-//		AffineTransform objRot = new AffineTransform(cos, sin, -sin, cos, 0, 0);
-//		AffineTransform objToWorld = new AffineTransform(1,0,0,1,c.x,c.y);
-//		objToWorld.concatenate(objRot);
-		
-//		AffineTransform objToWorld = new AffineTransform(cos, sin, -sin, cos, c.x, c.y);
-		AffineTransform objToWorld = new AffineTransform();
-		
-		objToWorld.translate(shape.getCenter().x, shape.getCenter().y);
-		objToWorld.rotate(shape.getRotation());
+		AffineTransform objToWorld = new AffineTransform(cos, sin, -sin, cos, c.x, c.y);
 		AffineTransform objToView = ViewSpaceTransform.inst().transformToViewSpace(objToWorld);
-//		g2d.setTransform(objToWorld);
 		g2d.setTransform(objToView);
+
+//		OLD CODE
+//		AffineTransform objToWorld = new AffineTransform();
+//		objToWorld.translate(shape.getCenter().x, shape.getCenter().y);
+//		objToWorld.rotate(shape.getRotation());
+//		g2d.setTransform(objToWorld);
 	}
 	
 	
