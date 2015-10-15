@@ -147,7 +147,6 @@ public class Controller implements CS355Controller {
 			int knob = (int)(VIEW_SIZE/(zoomFactor*4));
 			viewOrigX += knob/2;
 			viewOrigY += knob/2;
-			System.out.println(String.format("Ox: %d, Oy: %d", viewOrigX, viewOrigY));
 			updateScrollBars(knob);
 			ViewSpaceTransform.inst().setScale(zoomFactor);
 			ViewSpaceTransform.inst().setOrigin(viewOrigX, viewOrigY);
@@ -165,7 +164,6 @@ public class Controller implements CS355Controller {
 			int knob = (int)(VIEW_SIZE/(zoomFactor*4));
 			viewOrigX -= knob/4;
 			viewOrigY -= knob/4;
-			System.out.println(String.format("Ox: %d, Oy: %d", viewOrigX, viewOrigY));
 			if (viewOrigX < 0) viewOrigX = 0;
 			else if (viewOrigX + knob > VIEW_SIZE) viewOrigX = VIEW_SIZE - knob;
 			if (viewOrigY < 0) viewOrigY = 0;

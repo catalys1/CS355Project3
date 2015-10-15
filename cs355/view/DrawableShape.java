@@ -14,7 +14,7 @@ import cs355.model.drawing.Shape;
 public class DrawableShape {
 	
 	public static Color borderColor = Color.red;
-	public static Stroke borderStroke = new BasicStroke(2);
+	public static Stroke borderStroke = new BasicStroke(0.25f);
 	
 	private Shape shape;
 	

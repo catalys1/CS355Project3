@@ -1,6 +1,9 @@
 package cs355.view;
 
 import java.awt.Graphics2D;
+
+import cs355.ViewSpaceTransform;
+import cs355.controller.HandleHitTester;
 import cs355.model.drawing.Rectangle;
 
 public class DrawableRectangle extends DrawableShape {
@@ -18,11 +21,13 @@ public class DrawableRectangle extends DrawableShape {
 		double w = rectangle.getWidth();
 		double h = rectangle.getHeight();
 		if (outline) {
+			double scale = ViewSpaceTransform.inst().getScale();
 			g2d.setColor(DrawableShape.borderColor);
 			g2d.setStroke(DrawableShape.borderStroke);
 			g2d.drawRect((int)(-w/2), (int)(-h/2), (int)w, (int)h);
-			int s = 16;
-			g2d.drawOval(-s/2, -(int)(h/2+10+s), s, s);
+			double s = HandleHitTester.HANDLE_SIZE / scale + scale / 4;
+			double dis = HandleHitTester.HANDLE_DISPLACEMENT / scale;
+			g2d.drawOval(-(int)(s/2), -(int)(h/2+dis+s), (int)s, (int)s);
 		}
 		else {
 			g2d.setColor(rectangle.getColor());

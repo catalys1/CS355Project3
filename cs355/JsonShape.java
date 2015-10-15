@@ -62,6 +62,7 @@ public class JsonShape implements JsonSerializer<Shape>, JsonDeserializer<Shape>
 		String className = jo.get(KEY).getAsString();
 		try {
 			// Load the class as an object and use it in deserialization.
+			@SuppressWarnings("unchecked")
 			Class<? extends Shape> c = (Class<? extends Shape>) Class.forName(className);
 			return jdc.deserialize(je, c);
 		}

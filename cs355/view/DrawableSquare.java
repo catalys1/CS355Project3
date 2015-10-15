@@ -26,9 +26,9 @@ public class DrawableSquare extends DrawableShape {
 			g2d.setColor(DrawableShape.borderColor);
 			g2d.setStroke(DrawableShape.borderStroke);
 			g2d.drawRect(-off, -off, size, size);
-			int hs = (int)(HandleHitTester.HANDLE_SIZE / scale);
-			int dis = (int)(HandleHitTester.HANDLE_DISPLACEMENT / scale);
-			g2d.drawOval(-hs/2, -(off+dis+hs), hs, hs);
+			double hs = (HandleHitTester.HANDLE_SIZE / scale + scale / 4);
+			double dis = (HandleHitTester.HANDLE_DISPLACEMENT / scale);
+			g2d.drawOval(-(int)hs/2, -(int)(off+dis+hs), (int)hs, (int)hs);
 		}
 		else {
 			g2d.setColor(square.getColor());

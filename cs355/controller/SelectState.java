@@ -7,6 +7,7 @@ import java.awt.geom.Point2D.Double;
 
 import cs355.GUIFunctions;
 import cs355.PointOps;
+import cs355.ViewSpaceTransform;
 import cs355.model.drawing.Line;
 import cs355.model.drawing.Model;
 import cs355.model.drawing.Triangle;
@@ -24,7 +25,6 @@ public class SelectState extends ControllerState {
 	@Override
 	public void mousePressed(Double point) {
 		clickPoint = point;
-		System.out.println(clickPoint);
 		
 		// First do a hit test for the selected shapes handle
 		if (activeShape != null) {
@@ -40,7 +40,7 @@ public class SelectState extends ControllerState {
 		// If a shape was hit, get the shape information from the model. If no shape was hit,
 		// make sure everything is reset
 		if (handle == 0) {
-			int index = model.hitTest(clickPoint, CLICK_TOLERANCE);
+			int index = model.hitTest(clickPoint, CLICK_TOLERANCE / ViewSpaceTransform.inst().getScale());
 			if (index >= 0) {
 				shapeIndex = index;
 				activeShape = model.getShape(shapeIndex);
